@@ -1,0 +1,11 @@
+* {
+}
+
+header {
+  text-align: center;
+  font: bold 5rem Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+#main {
+  border: 1px solid black;
+}
