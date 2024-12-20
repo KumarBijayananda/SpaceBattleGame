@@ -1,4 +1,6 @@
-* {
+html {
+  background-color: rgb(0, 1, 22);
+  color: white;
 }
 
 header {
@@ -7,5 +9,51 @@ header {
 }
 
 #main {
-  border: 1px solid black;
+  border: 0.5px solid rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+}
+
+.screen {
+  border: 0.5px solid rgb(255, 255, 255);
+}
+#alienShipScreen {
+  width: 15vw;
+}
+
+#gameScreen {
+  width: 70vw;
+  height: 70vh;
+  background: url("space.jpg") repeat;
+  background-size: contain;
+}
+
+#ship {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: url("spaceship.png") no-repeat center / contain;
+  transform: translateX(-50%);
+  /* border: 2px solid white; */
+}
+
+#alien {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: url("alien1.png") no-repeat center / contain;
+  transform: translateX(-50%);
+  /* border: 2px solid white; */
+}
+
+#console {
+  width: 15vw;
+}
+button {
+  margin: 1% auto;
+  border: 2px solid white;
 }

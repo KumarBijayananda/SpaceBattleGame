@@ -7,11 +7,13 @@ class Ship {
   }
 
   attack(_AlienShip) {
-    _AlienShip.hull -= this.firepower;
+    if (Math.random() < this.accuracy) _AlienShip.hull -= this.firepower;
     console.log("AlienShip's health is: " + _AlienShip.hull);
     while (_AlienShip.hull > 0) {
-      this.hull -= _AlienShip.firepower;
-      _AlienShip.hull -= this.firepower;
+      if (Math.random() < _AlienShip.accuracy) {
+        this.hull -= _AlienShip.firepower;
+        _AlienShip.hull -= this.firepower;
+      }
     }
     console.log(`${_AlienShip.name} has been destroyed!!`);
   }
