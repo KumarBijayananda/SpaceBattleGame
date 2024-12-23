@@ -1,24 +1,50 @@
+const alien = document.getElementById("alien");
+const consol = document.getElementById("console");
+const start = document.getElementById("start");
+const alienShipScreen = document.getElementById("alienSpaceScreen");
+
+let arrayAlienShip = [];
+
+//class to create a ship
 class Ship {
   constructor(name) {
     this.name = name;
     this.hull = 20;
     this.firepower = 5;
     this.accuracy = 0.7;
+    this.attack = this.attack.bind(this);
   }
 
+  //function to attack the alienship and alienship attacks back
   attack(_AlienShip) {
-    if (Math.random() < this.accuracy) _AlienShip.hull -= this.firepower;
-    console.log("AlienShip's health is: " + _AlienShip.hull);
-    while (_AlienShip.hull > 0) {
-      if (Math.random() < _AlienShip.accuracy) {
-        this.hull -= _AlienShip.firepower;
-        _AlienShip.hull -= this.firepower;
+    //attack while both ships are alive
+    addToConsol(`You are fighting ${_AlienShip.name}, prepare for battle!!`);
+    while (_AlienShip.hull > 0 && this.hull > 0) {
+      if (Math.random() < this.accuracy) {
+        //check for accuracy
+        _AlienShip.hull -= this.firepower; //if so attack and deduct damage from hull
+        if (_AlienShip.hull <= 0) {
+          //check if Alienship is dead
+          addToConsol(`${_AlienShip.name} has been destroyed!!`); //log if ship is dead
+          break; //if dead, break out of the loop
+        }
       }
+
+      if (Math.random() < _AlienShip.accuracy) {
+        //check for accuracy
+        this.hull -= _AlienShip.firepower; //if so attack and deduct damage from hull
+        if (this.hull <= 0) {
+          //check if your ship is dead
+          addToConsol(`${this.name} has been destroyed!!`); //log if ship is dead
+          break; //if dead, break out of the loop
+        }
+      }
+      console.log("Attacking Again!!");
     }
-    console.log(`${_AlienShip.name} has been destroyed!!`);
   }
 }
 
+//class to create an alienship that extends ship class
 class AlienShip extends Ship {
   constructor(name) {
     super(name);
@@ -29,8 +55,35 @@ class AlienShip extends Ship {
   }
 }
 
+//Instantiating ship object from Ship class
 const ship = new Ship("USS Admiral");
+//Instantiating alienship object from AlienShip class
 
-const alienShip = new AlienShip("Dark Vader");
+// ship.attack(alienShip);
 
-ship.attack(alienShip);
+alien.addEventListener("click", () => {
+  const alienShip = arrayAlienShip.pop();
+  ship.attack(alienShip);
+});
+
+start.addEventListener("click", () => {
+  addToConsol("Game has started!!");
+  createAlienShip(6);
+});
+
+function addToConsol(msg) {
+  const msgNode = document.createElement("p");
+  msgNode.innerText = msg;
+  consol.appendChild(msgNode);
+}
+
+const createAlienShip = (numOfShips) => {
+  arrayAlienShip = [];
+  // const ul = document.createElement("ul");
+  // alienShipScreen.appendChild(ul);
+  for (let i = 0; i < numOfShips; i++) {
+    const alienShip = new AlienShip("AlienShip #" + i);
+    arrayAlienShip.push(alienShip);
+  }
+  addToConsol("Ships created!!");
+};

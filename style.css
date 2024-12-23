@@ -52,8 +52,35 @@ header {
 
 #console {
   width: 15vw;
+  height: 70vh;
+  overflow: auto;
 }
-button {
+.button {
   margin: 1% auto;
-  border: 2px solid white;
+  /* border: 2px solid white; */
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  display: inline-block;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #0f5fa0; /* Space-themed blue */
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #00bfff; /* Lighter blue on hover */
+  color: black;
+  transform: scale(1.05);
+}
+
+button:active {
+  background-color: #005f9e; /* Darker blue when pressed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: scale(0.95);
 }
