@@ -84,3 +84,10 @@ button:active {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transform: scale(0.95);
 }
+
+#alienShipScreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

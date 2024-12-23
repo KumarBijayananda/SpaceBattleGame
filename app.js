@@ -1,7 +1,7 @@
 const alien = document.getElementById("alien");
 const consol = document.getElementById("console");
 const start = document.getElementById("start");
-const alienShipScreen = document.getElementById("alienSpaceScreen");
+const alienShipScreen = document.getElementById("alienShipScreen");
 
 let arrayAlienShip = [];
 
@@ -62,7 +62,7 @@ const ship = new Ship("USS Admiral");
 // ship.attack(alienShip);
 
 alien.addEventListener("click", () => {
-  const alienShip = arrayAlienShip.pop();
+  const alienShip = arrayAlienShip.shift();
   ship.attack(alienShip);
 });
 
@@ -79,11 +79,19 @@ function addToConsol(msg) {
 
 const createAlienShip = (numOfShips) => {
   arrayAlienShip = [];
-  // const ul = document.createElement("ul");
-  // alienShipScreen.appendChild(ul);
-  for (let i = 0; i < numOfShips; i++) {
+
+  const title = document.createElement("h4");
+  title.innerText = "Alien Spaceships have arrived!!";
+  alienShipScreen.appendChild(title);
+
+  for (let i = 1; i <= numOfShips; i++) {
     const alienShip = new AlienShip("AlienShip #" + i);
     arrayAlienShip.push(alienShip);
+    const alienShipImage = document.createElement("img");
+    alienShipImage.src = "./alien2.png";
+    alienShipImage.width = "200";
+    alienShipImage.height = "100";
+    alienShipScreen.appendChild(alienShipImage);
   }
   addToConsol("Ships created!!");
 };
