@@ -4,6 +4,7 @@ const start = document.getElementById("start");
 const alienShipScreen = document.getElementById("alienShipScreen");
 
 let arrayAlienShip = [];
+let hasGameStarted = false;
 
 //class to create a ship
 class Ship {
@@ -67,8 +68,12 @@ alien.addEventListener("click", () => {
 });
 
 start.addEventListener("click", () => {
-  addToConsol("Game has started!!");
-  createAlienShip(6);
+  if (hasGameStarted === false) {
+    addToConsol("Game has started!!");
+    createAlienShip(6);
+    hasGameStarted = true;
+    toggleHideShow(start);
+  }
 });
 
 function addToConsol(msg) {
@@ -88,10 +93,16 @@ const createAlienShip = (numOfShips) => {
     const alienShip = new AlienShip("AlienShip #" + i);
     arrayAlienShip.push(alienShip);
     const alienShipImage = document.createElement("img");
-    alienShipImage.src = "./alien2.png";
+    alienShipImage.src = "./alien1.png";
     alienShipImage.width = "200";
     alienShipImage.height = "100";
     alienShipScreen.appendChild(alienShipImage);
   }
   addToConsol("Ships created!!");
 };
+
+function toggleHideShow(elementID) {
+  // const el = document.getElementById(elementID);
+  elementID.style.display =
+    elementID.style.diplay === "none" ? "block" : "none";
+}
