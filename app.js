@@ -2,6 +2,7 @@ const alien = document.getElementById("alien");
 const consol = document.getElementById("console");
 const start = document.getElementById("start");
 const alienShipScreen = document.getElementById("alienShipScreen");
+const gameScreen = document.getElementById("gameScreen");
 
 let arrayAlienShip = [];
 let hasGameStarted = false;
@@ -19,29 +20,30 @@ class Ship {
   //function to attack the alienship and alienship attacks back
   attack(_AlienShip) {
     //attack while both ships are alive
-    addToConsol(`You are fighting ${_AlienShip.name}, prepare for battle!!`);
+    addToConsol(`You are fighting ${_AlienShip.name}!!`);
     while (_AlienShip.hull > 0 && this.hull > 0) {
       if (Math.random() < this.accuracy) {
         //check for accuracy
         _AlienShip.hull -= this.firepower; //if so attack and deduct damage from hull
+        addToConsol(`${_AlienShip.name} has taken ${this.firepower} damage!`);
         if (_AlienShip.hull <= 0) {
           //check if Alienship is dead
           addToConsol(`${_AlienShip.name} has been destroyed!!`); //log if ship is dead
 
           break; //if dead, break out of the loop
         }
-      }
+      } else addToConsol(`${this.name} missed!!`);
 
       if (Math.random() < _AlienShip.accuracy) {
         //check for accuracy
         this.hull -= _AlienShip.firepower; //if so attack and deduct damage from hull
+        addToConsol(`${this.name} has taken ${_AlienShip.firepower} damage!`);
         if (this.hull <= 0) {
           //check if your ship is dead
           addToConsol(`${this.name} has been destroyed!!`); //log if ship is dead
           break; //if dead, break out of the loop
         }
-      }
-      console.log("Attacking Again!!");
+      } else addToConsol(`${_AlienShip.name} missed!!`);
     }
   }
 }
@@ -63,15 +65,19 @@ const ship = new Ship("USS Admiral");
 
 alien.addEventListener("click", () => {
   addToConsol(arrayAlienShip.length);
+
   const alienShip = arrayAlienShip.shift();
   ship.attack(alienShip);
-  if (arrayAlienShip[0]) removeAlienShip();
-  else alien.style.display = "none";
+  removeAlienShip();
+
+  if (!arrayAlienShip[0]) alien.style.display = "none";
 });
 
 start.addEventListener("click", () => {
   if (hasGameStarted === false) {
-    addToConsol("Game has started!!");
+    addToConsol(
+      "Click on Alien Ship to attack it! Watch  your progress here on console!!"
+    );
     createAlienShip(6);
     hasGameStarted = true;
     toggleHideShow(start);
@@ -83,14 +89,14 @@ function addToConsol(msg) {
   const msgNode = document.createElement("p");
   msgNode.innerText = msg;
   consol.appendChild(msgNode);
-  msgNode.scrollIntoView({ behavior: "smooth", block: "end" });
+  msgNode.scrollIntoView({ behavior: "smooth", block: "end" }); //function to auto scroll to last msg
 }
 
 const createAlienShip = (numOfShips) => {
   arrayAlienShip = [];
 
   const title = document.createElement("h4");
-  title.innerText = "Alien Spaceships have arrived!!";
+  title.innerText = "Alien Spaceships";
   alienShipScreen.appendChild(title);
 
   for (let i = 1; i <= numOfShips; i++) {
@@ -102,7 +108,9 @@ const createAlienShip = (numOfShips) => {
     alienShipImage.height = "100";
     alienShipScreen.appendChild(alienShipImage);
   }
-  addToConsol("Ships created!!");
+  alienShipScreen.lastChild.style.border = "1px solid white";
+
+  displayStats(ship);
 };
 
 function toggleHideShow(...elementID) {
@@ -115,4 +123,12 @@ function toggleHideShow(...elementID) {
 
 function removeAlienShip() {
   alienShipScreen.removeChild(alienShipScreen.querySelector("img"));
+}
+
+function displayStats(obj) {
+  const stats = document.createElement("p");
+  stats.innerText = `Hull: ${obj.hull}\n Fire Power: ${obj.firepower}\n  Accuracy: ${obj.accuracy}`;
+  stats.style.margin = "60vh 0 0 5vw";
+  stats.style.fontSize = "20px";
+  gameScreen.appendChild(stats);
 }
