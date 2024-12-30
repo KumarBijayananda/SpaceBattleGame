@@ -27,7 +27,7 @@ class Ship {
         if (_AlienShip.hull <= 0) {
           //check if Alienship is dead
           addToConsol(`${_AlienShip.name} has been destroyed!!`); //log if ship is dead
-          removeAlienShip();
+
           break; //if dead, break out of the loop
         }
       }
@@ -62,15 +62,17 @@ const ship = new Ship("USS Admiral");
 //Instantiating alienship object from AlienShip class
 
 alien.addEventListener("click", () => {
+  addToConsol(arrayAlienShip.length);
   const alienShip = arrayAlienShip.shift();
   ship.attack(alienShip);
-  delete alienShip;
+  if (arrayAlienShip[0]) removeAlienShip();
+  else alien.style.display = "none";
 });
 
 start.addEventListener("click", () => {
   if (hasGameStarted === false) {
     addToConsol("Game has started!!");
-    createAlienShip(5);
+    createAlienShip(6);
     hasGameStarted = true;
     toggleHideShow(start);
     alien.style.display = "block";
@@ -81,6 +83,7 @@ function addToConsol(msg) {
   const msgNode = document.createElement("p");
   msgNode.innerText = msg;
   consol.appendChild(msgNode);
+  msgNode.scrollIntoView({ behavior: "smooth", block: "end" });
 }
 
 const createAlienShip = (numOfShips) => {
