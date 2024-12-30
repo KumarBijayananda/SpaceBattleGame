@@ -69,8 +69,11 @@ alien.addEventListener("click", () => {
   const alienShip = arrayAlienShip.shift();
   ship.attack(alienShip);
   removeAlienShip();
+  // displayStats(arrayAlienShip.at(0));
 
-  if (!arrayAlienShip[0]) alien.style.display = "none";
+  if (!arrayAlienShip[0]) {
+    alien.style.display = "none";
+  }
 });
 
 start.addEventListener("click", () => {
@@ -110,7 +113,7 @@ const createAlienShip = (numOfShips) => {
   }
   alienShipScreen.lastChild.style.border = "1px solid white";
 
-  displayStats(ship);
+  // displayStats(arrayAlienShip[5]);
 };
 
 function toggleHideShow(...elementID) {
@@ -125,10 +128,20 @@ function removeAlienShip() {
   alienShipScreen.removeChild(alienShipScreen.querySelector("img"));
 }
 
-function displayStats(obj) {
-  const stats = document.createElement("p");
-  stats.innerText = `Hull: ${obj.hull}\n Fire Power: ${obj.firepower}\n  Accuracy: ${obj.accuracy}`;
-  stats.style.margin = "60vh 0 0 5vw";
-  stats.style.fontSize = "20px";
-  gameScreen.appendChild(stats);
-}
+// function displayStats(alien, ship) {
+//   gameScreen.innerText = "";
+
+//   const statsAlien = document.createElement("p");
+//   statsAlien.innerText = `Hull: ${obj.hull}\n Fire Power: ${obj.firepower}\n  Accuracy: ${obj.accuracy}`;
+//   statsAlien.style.margin = "7vh 0 0 5vw";
+//   statsAlien.style.fontSize = "20px";
+//   statsAlien.id = "stats";
+//   gameScreen.appendChild(statsAlien);
+
+//   const statsShip = document.createElement("p");
+//   statsShip.innerText = `Hull: ${ship.hull}\n Fire Power: ${ship.firepower}\n  Accuracy: ${ship.accuracy}`;
+//   statsShip.style.margin = "40vh 0 0 5vw";
+//   statsShip.style.fontSize = "20px";
+//   statsShip.id = "stats";
+//   gameScreen.appendChild(statsShip);
+// }
