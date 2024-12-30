@@ -27,6 +27,7 @@ class Ship {
         if (_AlienShip.hull <= 0) {
           //check if Alienship is dead
           addToConsol(`${_AlienShip.name} has been destroyed!!`); //log if ship is dead
+          removeAlienShip();
           break; //if dead, break out of the loop
         }
       }
@@ -60,19 +61,19 @@ class AlienShip extends Ship {
 const ship = new Ship("USS Admiral");
 //Instantiating alienship object from AlienShip class
 
-// ship.attack(alienShip);
-
 alien.addEventListener("click", () => {
   const alienShip = arrayAlienShip.shift();
   ship.attack(alienShip);
+  delete alienShip;
 });
 
 start.addEventListener("click", () => {
   if (hasGameStarted === false) {
     addToConsol("Game has started!!");
-    createAlienShip(6);
+    createAlienShip(5);
     hasGameStarted = true;
     toggleHideShow(start);
+    alien.style.display = "block";
   }
 });
 
@@ -101,8 +102,14 @@ const createAlienShip = (numOfShips) => {
   addToConsol("Ships created!!");
 };
 
-function toggleHideShow(elementID) {
+function toggleHideShow(...elementID) {
   // const el = document.getElementById(elementID);
-  elementID.style.display =
-    elementID.style.diplay === "none" ? "block" : "none";
+  for (let i = 0; i < elementID.length; i++) {
+    elementID[i].style.display =
+      elementID[i].style.diplay === "none" ? "block" : "none";
+  }
+}
+
+function removeAlienShip() {
+  alienShipScreen.removeChild(alienShipScreen.querySelector("img"));
 }

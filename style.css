@@ -47,7 +47,7 @@ header {
   height: 200px;
   background: url("alien1.png") no-repeat center / contain;
   transform: translateX(-50%);
-  /* border: 2px solid white; */
+  display: none;
 }
 
 #console {
@@ -88,6 +88,6 @@ button:active {
 #alienShipScreen {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 }
