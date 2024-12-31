@@ -66,16 +66,15 @@ alien.addEventListener("click", () => {
   const alienShip = arrayAlienShip.shift(); //removing alienship from array after user clicks on the alien ship
   ship.attack(alienShip); //calling the attack function
 
-  if (!arrayAlienShip[0]) {
+  if (arrayAlienShip[0]) {
+    displayStats(arrayAlienShip.at(0));
+    setTimeout(checkContinue, 0);
+  } else {
     alien.style.display = "none";
     while (document.querySelector(".stats")) {
       document.querySelector(".stats").remove();
     }
-
-    setTimeout(checkGameEnd, 0);
-  } else {
-    displayStats(arrayAlienShip.at(0));
-    setTimeout(checkContinue, 0);
+    setTimeout(checkGameEnd, 100);
   }
 });
 
