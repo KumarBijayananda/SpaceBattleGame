@@ -62,8 +62,6 @@ class AlienShip extends Ship {
 //Instantiating alienship object from AlienShip class
 
 alien.addEventListener("click", () => {
-  displayStats(arrayAlienShip.at(0));
-
   const alienShip = arrayAlienShip.shift();
   ship.attack(alienShip);
   removeAlienShip();
@@ -73,8 +71,14 @@ alien.addEventListener("click", () => {
     while (document.querySelector(".stats")) {
       document.querySelector(".stats").remove();
     }
-    window.prompt();
-  }
+    if (
+      window.confirm(
+        "All the aliens have been destroyed! Do you want to restart the game"
+      ) == true
+    ) {
+      location.reload();
+    } else addToConsol("Game has ended!!");
+  } else displayStats(arrayAlienShip.at(0));
 });
 
 //Instantiating ship object from Ship class
@@ -85,6 +89,7 @@ start.addEventListener("click", () => {
     "Please enter your ship's name.",
     "USS Assembly"
   );
+  if (shipName !== null && shipName !== "") ship.name = shipName; //if user'n name is not null, use that name
 
   if (hasGameStarted === false) {
     addToConsol(
