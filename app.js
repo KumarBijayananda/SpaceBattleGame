@@ -29,7 +29,7 @@ class Ship {
         if (_AlienShip.hull <= 0) {
           //check if Alienship is dead
           addToConsol(`${_AlienShip.name} has been destroyed!!`); //log if ship is dead
-
+          removeAlienShip(); //calling the function to remove alien ship
           break; //if dead, break out of the loop
         }
       } else addToConsol(`${this.name} missed!!`);
@@ -41,6 +41,7 @@ class Ship {
         if (this.hull <= 0) {
           //check if your ship is dead
           addToConsol(`${this.name} has been destroyed!!`); //log if ship is dead
+
           break; //if dead, break out of the loop
         }
       } else addToConsol(`${_AlienShip.name} missed!!`);
@@ -62,27 +63,44 @@ class AlienShip extends Ship {
 //Instantiating alienship object from AlienShip class
 
 alien.addEventListener("click", () => {
-  const alienShip = arrayAlienShip.shift();
-  ship.attack(alienShip);
-  removeAlienShip();
+  const alienShip = arrayAlienShip.shift(); //removing alienship from array after user clicks on the alien ship
+  ship.attack(alienShip); //calling the attack function
 
   if (!arrayAlienShip[0]) {
     alien.style.display = "none";
     while (document.querySelector(".stats")) {
       document.querySelector(".stats").remove();
     }
-    if (
-      window.confirm(
-        "All the aliens have been destroyed! Do you want to restart the game"
-      ) == true
-    ) {
-      location.reload();
-    } else addToConsol("Game has ended!!");
-  } else displayStats(arrayAlienShip.at(0));
+
+    setTimeout(checkGameEnd, 0);
+  } else {
+    displayStats(arrayAlienShip.at(0));
+    setTimeout(checkContinue, 0);
+  }
 });
 
 //Instantiating ship object from Ship class
 const ship = new Ship("USS Assembly");
+
+function checkContinue() {
+  if (
+    window.confirm(
+      "Alienship has been destroyed! Click OK to continue or cancel to retreat which will end the game"
+    ) == false
+  ) {
+    alien.style.display = "none";
+    addToConsol("Game has ended!!");
+  }
+}
+function checkGameEnd() {
+  if (
+    window.confirm(
+      "All the aliens have been destroyed! Do you want to restart the game"
+    ) == true
+  ) {
+    location.reload();
+  } else addToConsol("Game has ended!!");
+}
 
 start.addEventListener("click", () => {
   const shipName = window.prompt(
@@ -95,13 +113,14 @@ start.addEventListener("click", () => {
     addToConsol(
       "Click on Alien Ship to attack it! Watch  your progress here on console!!"
     );
-    createAlienShip(6);
+    createAlienShip(6); //creating 6 alien ships per specification
     hasGameStarted = true;
     toggleHideShow(start);
-    alien.style.display = "block";
+    alien.style.display = "block"; //showing the alien after the game has been started
   }
 });
 
+//function to show msg to ship's console
 function addToConsol(msg) {
   const msgNode = document.createElement("p");
   msgNode.innerText = msg;
@@ -109,6 +128,7 @@ function addToConsol(msg) {
   msgNode.scrollIntoView({ behavior: "smooth", block: "end" }); //function to auto scroll to last msg
 }
 
+//function to create a specified number of alien ships
 const createAlienShip = (numOfShips) => {
   arrayAlienShip = [];
 
@@ -130,6 +150,7 @@ const createAlienShip = (numOfShips) => {
   displayStats(arrayAlienShip[0]);
 };
 
+//function to toggle any element between hide or show
 function toggleHideShow(...elementID) {
   // const el = document.getElementById(elementID);
   for (let i = 0; i < elementID.length; i++) {
@@ -138,16 +159,19 @@ function toggleHideShow(...elementID) {
   }
 }
 
+//function to remove an alien from alien Screen
 function removeAlienShip() {
   alienShipScreen.removeChild(alienShipScreen.querySelector("img"));
 }
 
+//function to display stats for both ships
 function displayStats(obj) {
-  // gameScreen.innerText = "";
   while (document.querySelector(".stats")) {
+    //removing any previous stats
     document.querySelector(".stats").remove();
   }
 
+  //displaying currect stats
   const statsAlien = document.createElement("p");
   statsAlien.innerText = `Name: ${obj.name}\n Hull: ${obj.hull}\n Fire Power: ${obj.firepower}\n  Accuracy: ${obj.accuracy}`;
   statsAlien.style.margin = "7vh 0 0 5vw";
