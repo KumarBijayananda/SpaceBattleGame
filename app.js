@@ -64,15 +64,17 @@ const ship = new Ship("USS Admiral");
 //Instantiating alienship object from AlienShip class
 
 alien.addEventListener("click", () => {
-  addToConsol(arrayAlienShip.length);
+  displayStats(arrayAlienShip.at(0));
 
   const alienShip = arrayAlienShip.shift();
   ship.attack(alienShip);
   removeAlienShip();
-  // displayStats(arrayAlienShip.at(0));
 
   if (!arrayAlienShip[0]) {
     alien.style.display = "none";
+    while (document.querySelector(".stats")) {
+      document.querySelector(".stats").remove();
+    }
   }
 });
 
@@ -113,7 +115,7 @@ const createAlienShip = (numOfShips) => {
   }
   alienShipScreen.lastChild.style.border = "1px solid white";
 
-  // displayStats(arrayAlienShip[5]);
+  displayStats(arrayAlienShip[0]);
 };
 
 function toggleHideShow(...elementID) {
@@ -128,20 +130,23 @@ function removeAlienShip() {
   alienShipScreen.removeChild(alienShipScreen.querySelector("img"));
 }
 
-// function displayStats(alien, ship) {
-//   gameScreen.innerText = "";
+function displayStats(obj) {
+  // gameScreen.innerText = "";
+  while (document.querySelector(".stats")) {
+    document.querySelector(".stats").remove();
+  }
 
-//   const statsAlien = document.createElement("p");
-//   statsAlien.innerText = `Hull: ${obj.hull}\n Fire Power: ${obj.firepower}\n  Accuracy: ${obj.accuracy}`;
-//   statsAlien.style.margin = "7vh 0 0 5vw";
-//   statsAlien.style.fontSize = "20px";
-//   statsAlien.id = "stats";
-//   gameScreen.appendChild(statsAlien);
+  const statsAlien = document.createElement("p");
+  statsAlien.innerText = `Hull: ${obj.hull}\n Fire Power: ${obj.firepower}\n  Accuracy: ${obj.accuracy}`;
+  statsAlien.style.margin = "7vh 0 0 5vw";
+  statsAlien.style.fontSize = "20px";
+  statsAlien.classList.add("stats");
+  gameScreen.appendChild(statsAlien);
 
-//   const statsShip = document.createElement("p");
-//   statsShip.innerText = `Hull: ${ship.hull}\n Fire Power: ${ship.firepower}\n  Accuracy: ${ship.accuracy}`;
-//   statsShip.style.margin = "40vh 0 0 5vw";
-//   statsShip.style.fontSize = "20px";
-//   statsShip.id = "stats";
-//   gameScreen.appendChild(statsShip);
-// }
+  const statsShip = document.createElement("p");
+  statsShip.innerText = `Hull: ${ship.hull}\n Fire Power: ${ship.firepower}\n  Accuracy: ${ship.accuracy}`;
+  statsShip.style.margin = "40vh 0 0 5vw";
+  statsShip.style.fontSize = "20px";
+  statsShip.classList.add("stats");
+  gameScreen.appendChild(statsShip);
+}
