@@ -59,8 +59,6 @@ class AlienShip extends Ship {
   }
 }
 
-//Instantiating ship object from Ship class
-const ship = new Ship("USS Admiral");
 //Instantiating alienship object from AlienShip class
 
 alien.addEventListener("click", () => {
@@ -75,10 +73,19 @@ alien.addEventListener("click", () => {
     while (document.querySelector(".stats")) {
       document.querySelector(".stats").remove();
     }
+    window.prompt();
   }
 });
 
+//Instantiating ship object from Ship class
+const ship = new Ship("USS Assembly");
+
 start.addEventListener("click", () => {
+  const shipName = window.prompt(
+    "Please enter your ship's name.",
+    "USS Assembly"
+  );
+
   if (hasGameStarted === false) {
     addToConsol(
       "Click on Alien Ship to attack it! Watch  your progress here on console!!"
@@ -137,14 +144,14 @@ function displayStats(obj) {
   }
 
   const statsAlien = document.createElement("p");
-  statsAlien.innerText = `Hull: ${obj.hull}\n Fire Power: ${obj.firepower}\n  Accuracy: ${obj.accuracy}`;
+  statsAlien.innerText = `Name: ${obj.name}\n Hull: ${obj.hull}\n Fire Power: ${obj.firepower}\n  Accuracy: ${obj.accuracy}`;
   statsAlien.style.margin = "7vh 0 0 5vw";
   statsAlien.style.fontSize = "20px";
   statsAlien.classList.add("stats");
   gameScreen.appendChild(statsAlien);
 
   const statsShip = document.createElement("p");
-  statsShip.innerText = `Hull: ${ship.hull}\n Fire Power: ${ship.firepower}\n  Accuracy: ${ship.accuracy}`;
+  statsShip.innerText = `Name: ${ship.name}\nHull: ${ship.hull}\n Fire Power: ${ship.firepower}\n  Accuracy: ${ship.accuracy}`;
   statsShip.style.margin = "40vh 0 0 5vw";
   statsShip.style.fontSize = "20px";
   statsShip.classList.add("stats");
