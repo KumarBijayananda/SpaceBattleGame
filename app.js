@@ -74,7 +74,7 @@ alien.addEventListener("click", () => {
     displayStats(arrayAlienShip.at(0));
     setTimeout(checkContinue, 500);
   } else {
-    alien.style.display = "none";
+    // alien.style.display = "none";
     while (document.querySelector(".stats")) {
       document.querySelector(".stats").remove();
     }
