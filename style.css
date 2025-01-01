@@ -50,6 +50,29 @@ header {
   display: none;
 }
 
+#rocket {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 70px;
+  background: url("rocket.png") no-repeat center / contain;
+  display: none;
+}
+
+#explosion {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  background: url("explosion.png") no-repeat center / contain;
+  transform: translateX(-50%);
+  display: none;
+  z-index: 10;
+}
+
 #console {
   width: 15vw;
   height: 70vh;
@@ -90,4 +113,13 @@ button:active {
   flex-direction: column;
   justify-content: start;
   align-items: center;
+}
+
+@keyframes fireRocket {
+  from {
+    transform: translate(-50%, 0);
+  }
+  to {
+    transform: translate(-50%, -400px);
+  }
 }

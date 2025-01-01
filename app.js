@@ -3,6 +3,8 @@ const consol = document.getElementById("console");
 const start = document.getElementById("start");
 const alienShipScreen = document.getElementById("alienShipScreen");
 const gameScreen = document.getElementById("gameScreen");
+const rocket = document.getElementById("rocket");
+const explosion = document.getElementById("explosion");
 
 let arrayAlienShip = [];
 let hasGameStarted = false;
@@ -21,6 +23,7 @@ class Ship {
   attack(_AlienShip) {
     //attack while both ships are alive
     addToConsol(`You are fighting ${_AlienShip.name}!!`);
+    fireRocket();
     while (_AlienShip.hull > 0 && this.hull > 0) {
       if (Math.random() < this.accuracy) {
         //check for accuracy
@@ -65,16 +68,17 @@ class AlienShip extends Ship {
 alien.addEventListener("click", () => {
   const alienShip = arrayAlienShip.shift(); //removing alienship from array after user clicks on the alien ship
   ship.attack(alienShip); //calling the attack function
+  rocket.style.display = "block";
 
   if (arrayAlienShip[0]) {
     displayStats(arrayAlienShip.at(0));
-    setTimeout(checkContinue, 0);
+    setTimeout(checkContinue, 500);
   } else {
     alien.style.display = "none";
     while (document.querySelector(".stats")) {
       document.querySelector(".stats").remove();
     }
-    setTimeout(checkGameEnd, 100);
+    setTimeout(checkGameEnd, 500);
   }
 });
 
@@ -89,6 +93,10 @@ function checkContinue() {
   ) {
     alien.style.display = "none";
     addToConsol("Game has ended!!");
+    toggleHideShow(start);
+  } else {
+    explosion.style.display = "none";
+    rocket.style.display = "none";
   }
 }
 function checkGameEnd() {
@@ -152,9 +160,11 @@ const createAlienShip = (numOfShips) => {
 //function to toggle any element between hide or show
 function toggleHideShow(...elementID) {
   // const el = document.getElementById(elementID);
+  console.log(elementID);
   for (let i = 0; i < elementID.length; i++) {
     elementID[i].style.display =
-      elementID[i].style.diplay === "none" ? "block" : "none";
+      elementID[i].style.display === "none" ? "block" : "none";
+    console.log("Toggle Hide Show");
   }
 }
 
@@ -172,16 +182,27 @@ function displayStats(obj) {
 
   //displaying currect stats
   const statsAlien = document.createElement("p");
-  statsAlien.innerText = `Name: ${obj.name}\n Hull: ${obj.hull}\n Fire Power: ${obj.firepower}\n  Accuracy: ${obj.accuracy}`;
-  statsAlien.style.margin = "7vh 0 0 5vw";
+  statsAlien.innerText = `Ship Name: ${obj.name}\n Hull: ${obj.hull}\n Fire Power: ${obj.firepower}\n  Accuracy: ${obj.accuracy}`;
+  statsAlien.style.margin = "7vh 0 0 3vw";
   statsAlien.style.fontSize = "20px";
   statsAlien.classList.add("stats");
   gameScreen.appendChild(statsAlien);
 
   const statsShip = document.createElement("p");
-  statsShip.innerText = `Name: ${ship.name}\nHull: ${ship.hull}\n Fire Power: ${ship.firepower}\n  Accuracy: ${ship.accuracy}`;
-  statsShip.style.margin = "40vh 0 0 5vw";
+  statsShip.innerText = `Ship Name: ${ship.name}\nHull: ${ship.hull}\n Fire Power: ${ship.firepower}\n  Accuracy: ${ship.accuracy}`;
+  statsShip.style.margin = "40vh 0 0 3vw";
   statsShip.style.fontSize = "20px";
   statsShip.classList.add("stats");
   gameScreen.appendChild(statsShip);
+}
+
+function fireRocket() {
+  rocket.style.display = "block";
+  rocket.style.animation = "fireRocket 0.3s linear";
+
+  rocket.addEventListener("animationend", () => {
+    rocket.style.display = "none";
+    rocket.style.animation = "";
+    explosion.style.display = "block";
+  });
 }
