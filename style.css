@@ -19,6 +19,8 @@ header {
 }
 #alienShipScreen {
   width: 15vw;
+  height: 70vh;
+  overflow: hidden;
 }
 
 #gameScreen {
@@ -80,7 +82,6 @@ header {
 }
 .button {
   margin: 1% auto;
-  /* border: 2px solid white; */
   display: flex;
   justify-content: center;
 }
@@ -90,20 +91,20 @@ button {
   color: white;
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #0f5fa0; /* Space-themed blue */
+  background-color: #0f5fa0;
   border-radius: 12px;
   text-align: center;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #00bfff; /* Lighter blue on hover */
+  background-color: #00bfff;
   color: black;
   transform: scale(1.05);
 }
 
 button:active {
-  background-color: #005f9e; /* Darker blue when pressed */
+  background-color: #005f9e;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transform: scale(0.95);
 }

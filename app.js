@@ -6,7 +6,7 @@ const gameScreen = document.getElementById("gameScreen");
 const rocket = document.getElementById("rocket");
 const explosion = document.getElementById("explosion");
 
-let arrayAlienShip = [];
+let arrayAlienShip = []; //empty array to hold the alien ships objects
 let hasGameStarted = false;
 
 //class to create a ship
@@ -19,11 +19,11 @@ class Ship {
     this.attack = this.attack.bind(this);
   }
 
-  //function to attack the alienship and alienship attacks back
+  //function to attack the alienship and alienship attacks back, also calls function to remove alienship
   attack(_AlienShip) {
     //attack while both ships are alive
     addToConsol(`You are fighting ${_AlienShip.name}!!`);
-    fireRocket();
+    fireRocket(); //animation to show rocket moving to hit alienship
     while (_AlienShip.hull > 0 && this.hull > 0) {
       if (Math.random() < this.accuracy) {
         //check for accuracy
@@ -63,13 +63,13 @@ class AlienShip extends Ship {
   }
 }
 
-//Instantiating alienship object from AlienShip class
-
+//event listener for alien ship which triggers attack function
 alien.addEventListener("click", () => {
   const alienShip = arrayAlienShip.shift(); //removing alienship from array after user clicks on the alien ship
   ship.attack(alienShip); //calling the attack function
   rocket.style.display = "block";
 
+  //checking to see if there are any more ships left
   if (arrayAlienShip[0]) {
     displayStats(arrayAlienShip.at(0));
     setTimeout(checkContinue, 500);
@@ -85,19 +85,21 @@ alien.addEventListener("click", () => {
 //Instantiating ship object from Ship class
 const ship = new Ship("USS Assembly");
 
+//function to check if the user wants to continue after everytime alien ship is eliminated per specification
 function checkContinue() {
   if (
     window.confirm(
       "Alienship has been destroyed! Click OK to continue or cancel to retreat which will end the game"
     ) == false
   ) {
-    alien.style.display = "none";
     addToConsol("Game has ended!!");
     toggleHideShow(start);
   } else {
     explosion.style.display = "none";
     rocket.style.display = "none";
   }
+
+  //check to see if user wants to play again after all the alienships have been eliminated
 }
 function checkGameEnd() {
   if (
@@ -109,8 +111,10 @@ function checkGameEnd() {
   } else addToConsol("Game has ended!!");
 }
 
+//event listener for the start button at the beginning of the game
 start.addEventListener("click", () => {
   const shipName = window.prompt(
+    //asking user to enter the name of the ship
     "Please enter your ship's name.",
     "USS Assembly"
   );
@@ -148,8 +152,9 @@ const createAlienShip = (numOfShips) => {
     arrayAlienShip.push(alienShip);
     const alienShipImage = document.createElement("img");
     alienShipImage.src = "./alien1.png";
-    alienShipImage.width = "200";
-    alienShipImage.height = "100";
+    alienShipImage.style.maxWidth = "60%";
+    alienShipImage.style.height = "auto";
+    alienShipImage.style.objectFit = "contain";
     alienShipScreen.appendChild(alienShipImage);
   }
   alienShipScreen.lastChild.style.border = "1px solid white";
@@ -180,7 +185,7 @@ function displayStats(obj) {
     document.querySelector(".stats").remove();
   }
 
-  //displaying currect stats
+  //displaying current stats for Alien
   const statsAlien = document.createElement("p");
   statsAlien.innerText = `Ship Name: ${obj.name}\n Hull: ${obj.hull}\n Fire Power: ${obj.firepower}\n  Accuracy: ${obj.accuracy}`;
   statsAlien.style.margin = "7vh 0 0 3vw";
@@ -188,6 +193,7 @@ function displayStats(obj) {
   statsAlien.classList.add("stats");
   gameScreen.appendChild(statsAlien);
 
+  //displaying current stats for USS Admiral
   const statsShip = document.createElement("p");
   statsShip.innerText = `Ship Name: ${ship.name}\nHull: ${ship.hull}\n Fire Power: ${ship.firepower}\n  Accuracy: ${ship.accuracy}`;
   statsShip.style.margin = "40vh 0 0 3vw";
@@ -196,9 +202,10 @@ function displayStats(obj) {
   gameScreen.appendChild(statsShip);
 }
 
+//function to show rocket coming from USS Admiral and hitting alien ship and using animationend to show explosion
 function fireRocket() {
-  rocket.style.display = "block";
-  rocket.style.animation = "fireRocket 0.3s linear";
+  rocket.style.display = "block"; //making the rocket visible
+  rocket.style.animation = "fireRocket 0.3s linear"; //using css animation show rocket moving
 
   rocket.addEventListener("animationend", () => {
     rocket.style.display = "none";

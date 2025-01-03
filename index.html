@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
+    <title>Space Battle</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
@@ -11,15 +11,19 @@
   <body>
     <header>Space Battle</header>
     <div id="main">
+      <!-- side panel to display alienships -->
       <div class="screen" id="alienShipScreen"></div>
+      <!-- main screen for game play -->
       <div class="screen" id="gameScreen">
         <div id="alien"></div>
         <div id="ship"></div>
         <div id="rocket"></div>
         <div id="explosion"></div>
       </div>
+      <!-- side panel for messages -->
       <div class="screen" id="console"></div>
     </div>
+    <!-- footer for buttons like start button -->
     <div class="button"><button id="start">Press Play to Start</button></div>
     <script src="app.js" async defer></script>
   </body>
